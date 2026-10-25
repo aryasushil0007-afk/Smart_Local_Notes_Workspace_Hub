@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101827" />
+  <title>Smart Local Notes & Workspace Hub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div><strong>NoteNest</strong><span>WORKSPACE HUB</span></div>
+      </div>
+      <div class="sidebar-label">WORKSPACE</div>
+      <button class="nav-item active" id="allNotesNav"><span>▦</span> All notes <span class="nav-count" id="navCount">0</span></button>
+      <button class="nav-item" data-filter="Pinned"><span>☆</span> Pinned</button>
+      <button class="nav-item" data-filter="Work"><span>▤</span> Work</button>
+      <button class="nav-item" data-filter="Study"><span>⌘</span> Study</button>
+      <button class="nav-item" data-filter="Personal"><span>♡</span> Personal</button>
+      <div class="sidebar-bottom">
+        <div class="storage-card"><div class="storage-icon">✓</div><div><strong>Saved on this device</strong><p>Your notes stay in this browser using localStorage.</p></div></div>
+        <button class="text-button" id="exportBtn">↗ Export backup (JSON)</button>
+        <label class="text-button import-label">↙ Import backup (JSON)<input type="file" id="importInput" accept=".json,application/json" hidden></label>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">YOUR PERSONAL SPACE</p><h1 id="pageTitle">All notes</h1></div>
+        <div class="top-actions">
+          <label class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search notes..." aria-label="Search notes"></label>
+          <button class="primary-btn" id="newNoteBtn">＋ <span>New note</span></button>
+        </div>
+      </header>
+
+      <section class="welcome-panel">
+        <div><p class="eyebrow light">YOUR IDEAS, ORGANIZED</p><h2>A little space for<br><em>big ideas.</em></h2><p class="welcome-copy">Capture thoughts, organize projects, and keep your day moving.</p></div>
+        <div class="welcome-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-note">✎</div><div class="art-dot dot-one"></div><div class="art-dot dot-two"></div></div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-icon purple">▦</span><div><p>Total notes</p><strong id="totalStat">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon yellow">☆</span><div><p>Pinned notes</p><strong id="pinnedStat">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon green">◷</span><div><p>Updated today</p><strong id="todayStat">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon blue">▤</span><div><p>Categories</p><strong id="categoryStat">0</strong></div></article>
+      </section>
+
+      <section class="notes-section">
+        <div class="section-heading"><div><h2 id="sectionTitle">Recent notes</h2><p id="resultsLabel">Your notes, all in one place.</p></div><select id="sortSelect" aria-label="Sort notes"><option value="updated">Recently updated</option><option value="created">Recently created</option><option value="title">Title A–Z</option></select></div>
+        <div class="notes-grid" id="notesGrid"></div>
+        <div class="empty-state" id="emptyState" hidden><div class="empty-icon">✎</div><h3 id="emptyTitle">Your workspace is waiting</h3><p id="emptyText">Create your first note and make this space yours.</p><button class="primary-btn" id="emptyCreateBtn">＋ Create a note</button></div>
+      </section>
+      <footer>Made for your ideas <span>•</span> Stored locally in your browser</footer>
+    </main>
+  </div>
+
+  <dialog id="noteDialog">
+    <form id="noteForm" class="note-form">
+      <div class="modal-heading"><div><p class="eyebrow">NOTE EDITOR</p><h2 id="modalTitle">Create a note</h2></div><button type="button" class="icon-btn" id="closeDialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="noteId">
+      <label for="noteTitle">Title</label><input id="noteTitle" name="title" maxlength="90" placeholder="Give your note a title..." required>
+      <label for="noteCategory">Category</label><select id="noteCategory" name="category"><option>Personal</option><option>Work</option><option>Study</option><option>Ideas</option><option>Other</option></select>
+      <label for="noteTags">Tags <span class="muted">(comma separated)</span></label><input id="noteTags" name="tags" placeholder="e.g. planning, important">
+      <label for="noteContent">Your note</label><textarea id="noteContent" name="content" rows="7" placeholder="Start writing here..." required></textarea>
+      <label class="checkbox-line"><input type="checkbox" id="notePinned"> Pin this note</label>
+      <p class="form-error" id="formError" role="alert"></p>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelDialog">Cancel</button><button type="submit" class="primary-btn">Save note</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
